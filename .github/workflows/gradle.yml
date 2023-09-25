@@ -29,7 +29,7 @@ jobs:
         distribution: 'temurin'
 
     - uses: browser-actions/setup-chrome@v1
-      run: chrome --version
+    - run: chrome --version
 
     - uses: actions/checkout@v2
     - name: Build the stack
