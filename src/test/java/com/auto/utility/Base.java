@@ -98,6 +98,9 @@ public class Base {
                 //if(ConfigConstants.getIsLocal()) {
                 /////////////////LOCALLY//////////////
 //                log.info("Driver setting for chrome - locally");
+//                options.addArguments("--remote-allow-origins=*");
+//                options.addArguments("--no-sandbox");
+//                options.addArguments("--disable-dev-shm-usage");
 //                delegate = new ChromeDriver(options);
                 /////////////////LOCALLY//////////////
                 //  }
