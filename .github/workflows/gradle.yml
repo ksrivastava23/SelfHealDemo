@@ -36,12 +36,19 @@ jobs:
       working-directory: ./infra
       run:  docker-compose up -d
 
+    - name: Build with Gradle
+      working-directory: ./
+      run: |
+          ./gradlew wrapper --gradle-version=8.3
+          ./gradlew build
+
     - name: Test with Gradle
       working-directory: ./
       run: gradle cucumber
 
     - name: Archive Test Results
       uses: actions/upload-artifact@v3
+      working-directory: ./
       if: success() || failure()
       with:
         name: test-results

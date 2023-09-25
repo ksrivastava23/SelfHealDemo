@@ -8,12 +8,20 @@ buildscript {
         classpath "com.epam.healenium:hlm-report:1.1.2"
     }
 }
+
 plugins {
+    id 'java'
     id 'application'
 }
+
+
 apply plugin: "com.epam.healenium.hlm-report"
 group 'com.auto'
 version '1.0-SNAPSHOT'
+
+application {
+    mainClass = 'com.auto.Main'
+}
 
 repositories {
     mavenCentral()
