@@ -1,0 +1,94 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "com.epam.healenium:hlm-report:1.1.2"
+    }
+}
+plugins {
+    id 'application'
+}
+apply plugin: "com.epam.healenium.hlm-report"
+group 'com.auto'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    sourceCompatibility = 11
+    targetCompatibility = 11
+}
+
+project.ext {
+    cucumberVersion = '7.6.0'
+}
+
+dependencies {
+    testImplementation 'io.cucumber:cucumber-java:' + cucumberVersion
+    testImplementation 'io.cucumber:cucumber-picocontainer:' + cucumberVersion
+    implementation 'io.cucumber:cucumber-java8:' + cucumberVersion
+    implementation 'org.seleniumhq.selenium:selenium-java:4.11.0'
+    testImplementation 'org.testng:testng:7.4.0'
+    implementation 'io.cucumber:cucumber-testng:7.8.1'
+    implementation 'tech.grasshopper:extentreports-cucumber7-adapter:1.7.0'
+    implementation 'org.apache.logging.log4j:log4j-core:2.19.0'
+    implementation 'org.apache.logging.log4j:log4j-api:2.19.0'
+    testImplementation("io.github.bonigarcia:webdrivermanager:5.4.1")
+    implementation 'com.epam.healenium:healenium-web:3.4.2'
+    implementation 'com.fasterxml.jackson:jackson-bom:2.8.5.1'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.0.1'
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-protobuf:2.15.2'
+    implementation 'org.apache.logging.log4j:log4j-api:2.20.0'
+    implementation 'org.apache.logging.log4j:log4j-core:2.20.0'
+    implementation 'com.epam.healenium:hlm-report-mvn:1.1'
+    implementation 'io.qameta.allure:allure-cucumber7-jvm:2.24.0'
+
+
+}
+
+
+tasks.named('test') {
+    useTestNG()
+}
+
+configurations {
+    cucumberRuntime {
+        extendsFrom testImplementation
+    }
+}
+
+//task cucumber() {
+//    dependsOn assemble, testClasses
+//    doLast {
+//        javaexec {
+//            main = "io.cucumber.core.cli.Main"
+//            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+//            args = ['--plugin', 'pretty',
+//                    '--plugin',  'com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:Report',
+//                    '--glue','com.auto.stepdefs',
+//                    'src/test/resources','src/main/java',
+//                    '--tags', '@demo'
+//            ]
+//        }
+//    }
+//}
+task cucumber() {
+    dependsOn assemble, testClasses
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty',
+                    '--plugin',  'io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm',
+                    '--glue','com.auto.stepdefs',
+                    'src/test/resources','src/main/java',
+                    '--tags', '@demo'
+            ]
+        }
+    }
+}
