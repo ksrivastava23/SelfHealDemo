@@ -15,10 +15,12 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import java.io.*;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
+
 import com.epam.healenium.SelfHealingDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class Base {
-//    private WebDriver driver;
+    //    private WebDriver driver;
     private WebDriver delegate;
     private SelfHealingDriver driver;
     private String profile;
@@ -37,9 +39,8 @@ public class Base {
         this.countAddedProducts = countAddedProducts;
     }
 
-    public SelfHealingDriver getDriver()
-    {
-        return  driver;
+    public SelfHealingDriver getDriver() {
+        return driver;
     }
 
     public void setDriver() throws IOException {
@@ -47,14 +48,14 @@ public class Base {
         setBrowserDriverSelfHeal(prop.getProperty("browser"));
         driver.manage().window().maximize();
         driver.manage().deleteAllCookies();
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+//        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
     }
 
     public SignInPage getSignInPage() {
         return signInPage;
     }
 
-//    private void setBrowserDriver(String browserName) {
+    //    private void setBrowserDriver(String browserName) {
 //        switch (browserName.toLowerCase().trim())
 //        {
 //            case "chrome":
@@ -89,32 +90,42 @@ public class Base {
 //        }
 //    }
     private void setBrowserDriverSelfHeal(String browserName) {
-        switch (browserName.toLowerCase().trim())
-        {
+        switch (browserName.toLowerCase().trim()) {
             case "chrome":
-                log.info("Driver setting for Chrome" );
+                log.info("Driver setting for Chrome");
                 WebDriverManager.chromedriver().driverVersion("117.0.5938.88").setup();
                 ChromeOptions options = new ChromeOptions();
+                //if(ConfigConstants.getIsLocal()) {
+                /////////////////LOCALLY//////////////
+//                log.info("Driver setting for chrome - locally");
+//                delegate = new ChromeDriver(options);
+                /////////////////LOCALLY//////////////
+                //  }
+//                else {
+                /////////////////REMOTELY//////////////
+                log.info("Driver setting for chrome - remotely");
                 options.addArguments("--remote-allow-origins=*");
                 options.addArguments("--no-sandbox");
                 options.addArguments("--disable-dev-shm-usage");
                 options.addArguments("--headless");
-                delegate = new ChromeDriver(options);
+                delegate = new RemoteWebDriver(options);
+//                }
+                /////////////////REMOTELY//////////////
                 driver = SelfHealingDriver.create(delegate);
                 break;
             case "firefox":
-                log.info("Driver setting for Firefox" );
+                log.info("Driver setting for Firefox");
                 WebDriverManager.firefoxdriver().setup();
                 FirefoxOptions foptions = new FirefoxOptions();
                 delegate = new FirefoxDriver(foptions);
                 driver = SelfHealingDriver.create(delegate);
                 break;
             case "safari":
-                log.info("Driver setting for Safari" );
+                log.info("Driver setting for Safari");
                 WebDriverManager.safaridriver().setup();
                 break;
             case "ie":
-                log.info("Driver setting for IE" );
+                log.info("Driver setting for IE");
                 WebDriverManager.iedriver().setup();
 //                driver = new InternetExplorerDriver();
                 break;
@@ -137,19 +148,17 @@ public class Base {
     private void getProfile() {
         profile = "qa";//System.getenv("ENVIRONMENT").toLowerCase().trim();
         log.info("Environment is set to --> " + profile);
-        if (profile==null || profile.isEmpty())
-        {
+        if (profile == null || profile.isEmpty()) {
             ConfigConstants.setIsLocal(true);
             log.info("Running locally!!!");
-        }
-        else {
+        } else {
             ConfigConstants.setIsLocal(false);
         }
     }
 
     private FileInputStream getInputStream() throws FileNotFoundException {
         FileInputStream inputStream = new FileInputStream(System.getProperty("user.dir") + File.separator
-        + "src"+ File.separator+"test"+File.separator+"resources"+File.separator+ "config" +File.separator+profile+File.separator+"config.properties");
+                + "src" + File.separator + "test" + File.separator + "resources" + File.separator + "config" + File.separator + profile + File.separator + "config.properties");
         return inputStream;
     }
 
@@ -161,12 +170,11 @@ public class Base {
         this.prop = prop;
     }
 
-    public void setDriverExe(String key, String exePath)
-    {
+    public void setDriverExe(String key, String exePath) {
         System.setProperty(key, exePath);
     }
 
-    public void initializePageObjects(SelfHealingDriver driver, Base base){
-        signInPage = new SignInPage(driver,base);
+    public void initializePageObjects(SelfHealingDriver driver, Base base) {
+        signInPage = new SignInPage(driver, base);
     }
 }
