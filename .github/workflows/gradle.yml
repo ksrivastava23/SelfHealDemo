@@ -48,7 +48,6 @@ jobs:
 
     - name: Archive Test Results
       uses: actions/upload-artifact@v3
-      working-directory: ./
       if: success() || failure()
       with:
         name: test-results
