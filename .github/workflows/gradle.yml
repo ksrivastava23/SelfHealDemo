@@ -28,6 +28,7 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
 
+    - name: Set Up Chrome
     - uses: browser-actions/setup-chrome@v1
     - run: chrome --version
 
@@ -36,14 +37,10 @@ jobs:
       working-directory: ./infra
       run:  docker-compose up -d
 
-    - name: Make gradlew executable
-      run: chmod +x ./gradlew
-
-    - name: Build with Gradle
-      working-directory: ./
-      run: |
-          chmod +x ./gradlew wrapper --gradle-version=8.3
-          chmod +x ./gradlew build
+    - name: Set up Gradle version
+    - uses: gradle/gradle-build-action@v2
+      with:
+        gradle-version: 8.3
 
     - name: Test with Gradle
       working-directory: ./
