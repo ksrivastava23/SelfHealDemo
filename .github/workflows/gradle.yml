@@ -31,15 +31,18 @@ jobs:
     - uses: browser-actions/setup-chrome@v1
     - run: chrome --version
 
-    deploy:
+  deploy:
+    - steps:
     - uses: actions/checkout@v2
     - name: Build the stack
       run: docker-compose up -d
 
-    test:
+  test:
+    - steps:
     - name: Test with Gradle
       run: gradle cucumber
 
+  results:
     - name: Archive Rest Results
       uses: actions/upload-artifact@v3
       if: success() || failure()
