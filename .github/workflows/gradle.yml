@@ -28,13 +28,7 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
 
-    - uses: gradle/gradle-build-action@v2
-    - name: Set up Gradle version
-      with:
-        gradle-version: 8.3
-
     - uses: browser-actions/setup-chrome@v1
-    - name: Set Up Chrome
     - run: chrome --version
 
     - uses: actions/checkout@v2
@@ -42,12 +36,16 @@ jobs:
       working-directory: ./infra
       run:  docker-compose up -d
 
+    - uses: gradle/gradle-build-action@v2
+      with:
+        gradle-version: 8.3
+
     - name: Test with Gradle
       working-directory: ./
       run: gradle cucumber
 
     - name: Archive Test Results
-    - uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v3
       if: success() || failure()
       with:
         name: test-results
