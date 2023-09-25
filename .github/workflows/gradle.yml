@@ -40,7 +40,7 @@ jobs:
       working-directory: ./
       run: gradle cucumber
 
-    - name: Archive Rest Results
+    - name: Archive Test Results
       uses: actions/upload-artifact@v3
       if: success() || failure()
       with:
