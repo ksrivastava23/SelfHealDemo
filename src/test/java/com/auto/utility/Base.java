@@ -96,6 +96,8 @@ public class Base {
                 WebDriverManager.chromedriver().driverVersion("117.0.5938.88").setup();
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments("--remote-allow-origins=*");
+                options.addArguments("--no-sandbox");
+                options.addArguments("--disable-dev-shm-usage");
                 options.addArguments("--headless");
                 delegate = new ChromeDriver(options);
                 driver = SelfHealingDriver.create(delegate);
