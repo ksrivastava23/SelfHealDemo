@@ -33,11 +33,11 @@ jobs:
 
     - uses: actions/checkout@v2
     - name: Build the stack
-      run:
-        cd infra
-        docker-compose up -d
+      working-directory: ./infra
+      run:  docker-compose up -d
 
     - name: Test with Gradle
+      working-directory: ./
       run: gradle cucumber
 
     - name: Archive Rest Results
