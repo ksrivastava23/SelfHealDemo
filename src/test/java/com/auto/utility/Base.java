@@ -93,8 +93,8 @@ public class Base {
         switch (browserName.toLowerCase().trim()) {
             case "chrome":
                 log.info("Driver setting for Chrome");
-//                WebDriverManager.chromedriver().driverVersion("117.0.5938.88").setup();
-                WebDriverManager.chromedriver().setup();
+                WebDriverManager.chromedriver().driverVersion("117.0.5938.88").setup();
+//                WebDriverManager.chromedriver().setup();
                 ChromeOptions options = new ChromeOptions();
                 //if(ConfigConstants.getIsLocal()) {
                 /////////////////LOCALLY//////////////

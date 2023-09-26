@@ -21,32 +21,34 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up JDK 11
-      uses: actions/setup-java@v3
-      with:
-        java-version: '11'
-        distribution: 'temurin'
+      - uses: actions/checkout@v3
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
 
-    - uses: browser-actions/setup-chrome@v1
-    - run: chrome --version
+      - uses: browser-actions/setup-chrome@v1
+        with:
+          browser: chrome
+          version: 117.0.5938.88
 
-    - uses: actions/checkout@v2
-    - name: Build the stack
-      working-directory: ./infra
-      run:  docker-compose up -d
+      - uses: actions/checkout@v2
+      - name: Build the stack
+        working-directory: ./infra
+        run: docker-compose up -d
 
-    - uses: gradle/gradle-build-action@v2
-      with:
-        gradle-version: 8.3
+      - uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: 8.3
 
-    - name: Test with Gradle
-      working-directory: ./
-      run: gradle cucumber
+      - name: Test with Gradle
+        working-directory: ./
+        run: gradle cucumber
 
-    - name: Archive Test Results
-      uses: actions/upload-artifact@v3
-      if: success() || failure()
-      with:
-        name: test-results
-        path: GradleReports/emailable-report.html
+      - name: Archive Test Results
+        uses: actions/upload-artifact@v3
+        if: success() || failure()
+        with:
+          name: test-results
+          path: GradleReports/emailable-report.html
