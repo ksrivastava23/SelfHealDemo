@@ -93,11 +93,12 @@ public class Base {
         switch (browserName.toLowerCase().trim()) {
             case "chrome":
                 log.info("Driver setting for Chrome");
-                WebDriverManager.chromedriver().driverVersion("119.0.6031.0").setup();
+//                WebDriverManager.chromedriver().driverVersion("117.0.5938.88").setup();
+                WebDriverManager.chromedriver().setup();
                 ChromeOptions options = new ChromeOptions();
                 //if(ConfigConstants.getIsLocal()) {
                 /////////////////LOCALLY//////////////
-                log.info("Driver setting for chrome - remotely");
+                log.info("Driver setting for chrome - locally");
                 options.addArguments("--remote-allow-origins=*");
                 options.addArguments("--no-sandbox");
                 options.addArguments("--disable-dev-shm-usage");
