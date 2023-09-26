@@ -28,10 +28,10 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
 
-      - uses: browser-actions/setup-chrome@v1
-        with:
-          browser: chrome
-          version: 117.0.5938.88
+      - run: |
+          VERSION_STRING="117.0.5938.88"
+          wget "https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${VERSION_STRING}_amd64.deb"
+          sudo dpkg -i "google-chrome-stable_${VERSION_STRING}_amd64.deb"
 
       - uses: actions/checkout@v2
       - name: Build the stack
