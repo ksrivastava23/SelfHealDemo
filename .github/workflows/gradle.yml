@@ -37,7 +37,6 @@ jobs:
         node-version: '18.16.0'
 
     - name: Test with Node
-      working-directory: ./dev
       run: npx http-server
 
     - uses: actions/checkout@v2
