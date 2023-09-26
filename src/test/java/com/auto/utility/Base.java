@@ -20,8 +20,8 @@ import com.epam.healenium.SelfHealingDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class Base {
-        private WebDriver driver;
-//    private WebDriver delegate;
+    private WebDriver driver;
+    //    private WebDriver delegate;
 //    private SelfHealingDriver driver;
     private String profile;
     private String configPath;
@@ -97,10 +97,11 @@ public class Base {
                 ChromeOptions options = new ChromeOptions();
                 //if(ConfigConstants.getIsLocal()) {
                 /////////////////LOCALLY//////////////
-                log.info("Driver setting for chrome - locally");
+                log.info("Driver setting for chrome - remotely");
                 options.addArguments("--remote-allow-origins=*");
                 options.addArguments("--no-sandbox");
                 options.addArguments("--disable-dev-shm-usage");
+                options.addArguments("--headless");
                 driver = new RemoteWebDriver(options);
 //                driver = new ChromeDriver(options);
 //                delegate = new ChromeDriver(options);
