@@ -20,9 +20,9 @@ import com.epam.healenium.SelfHealingDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class Base {
-    //    private WebDriver driver;
-    private WebDriver delegate;
-    private SelfHealingDriver driver;
+        private WebDriver driver;
+//    private WebDriver delegate;
+//    private SelfHealingDriver driver;
     private String profile;
     private String configPath;
     private Properties prop = new Properties();
@@ -39,7 +39,7 @@ public class Base {
         this.countAddedProducts = countAddedProducts;
     }
 
-    public SelfHealingDriver getDriver() {
+    public WebDriver getDriver() {
         return driver;
     }
 
@@ -97,31 +97,33 @@ public class Base {
                 ChromeOptions options = new ChromeOptions();
                 //if(ConfigConstants.getIsLocal()) {
                 /////////////////LOCALLY//////////////
-//                log.info("Driver setting for chrome - locally");
-//                options.addArguments("--remote-allow-origins=*");
-//                options.addArguments("--no-sandbox");
-//                options.addArguments("--disable-dev-shm-usage");
+                log.info("Driver setting for chrome - locally");
+                options.addArguments("--remote-allow-origins=*");
+                options.addArguments("--no-sandbox");
+                options.addArguments("--disable-dev-shm-usage");
+                driver = new RemoteWebDriver(options);
+//                driver = new ChromeDriver(options);
 //                delegate = new ChromeDriver(options);
                 /////////////////LOCALLY//////////////
                 //  }
 //                else {
                 /////////////////REMOTELY//////////////
-                log.info("Driver setting for chrome - remotely");
-                options.addArguments("--remote-allow-origins=*");
-                options.addArguments("--no-sandbox");
-                options.addArguments("--disable-dev-shm-usage");
-                options.addArguments("--headless");
-                delegate = new RemoteWebDriver(options);
+//                log.info("Driver setting for chrome - remotely");
+//                options.addArguments("--remote-allow-origins=*");
+//                options.addArguments("--no-sandbox");
+//                options.addArguments("--disable-dev-shm-usage");
+//                options.addArguments("--headless");
+//                delegate = new RemoteWebDriver(options);
 //                }
                 /////////////////REMOTELY//////////////
-                driver = SelfHealingDriver.create(delegate);
+//                driver = SelfHealingDriver.create(delegate);
                 break;
             case "firefox":
                 log.info("Driver setting for Firefox");
                 WebDriverManager.firefoxdriver().setup();
                 FirefoxOptions foptions = new FirefoxOptions();
-                delegate = new FirefoxDriver(foptions);
-                driver = SelfHealingDriver.create(delegate);
+//                delegate = new FirefoxDriver(foptions);
+//                driver = SelfHealingDriver.create(delegate);
                 break;
             case "safari":
                 log.info("Driver setting for Safari");

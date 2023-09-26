@@ -2,6 +2,7 @@ package com.auto.pages;
 
 import com.auto.utility.Base;
 import com.epam.healenium.SelfHealingDriver;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
@@ -9,9 +10,9 @@ import org.openqa.selenium.support.PageFactory;
 
 public class SignInPage {
     private Base base;
-    SelfHealingDriver driver;
+    WebDriver driver;
 
-    public SignInPage(SelfHealingDriver driver, Base base) {
+    public SignInPage(WebDriver driver, Base base) {
         this.base = base;
         PageFactory.initElements(base.getDriver(),this);
     }
