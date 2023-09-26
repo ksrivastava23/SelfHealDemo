@@ -32,6 +32,13 @@ jobs:
     - run: chrome --version
 
     - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '18.16.0'
+      working-directory: ./dev
+      run: npx http-server
+
+    - uses: actions/checkout@v2
     - name: Build the stack
       working-directory: ./infra
       run:  docker-compose up -d
