@@ -93,18 +93,18 @@ public class Base {
         switch (browserName.toLowerCase().trim()) {
             case "chrome":
                 log.info("Driver setting for Chrome");
-                WebDriverManager.chromedriver().driverVersion("117.0.5938.88").setup();
-//                WebDriverManager.chromedriver().setup();
+//                WebDriverManager.chromedriver().driverVersion("117.0.5938.88").setup();
+                WebDriverManager.chromedriver().setup();
                 ChromeOptions options = new ChromeOptions();
                 //if(ConfigConstants.getIsLocal()) {
                 /////////////////LOCALLY//////////////
-                log.info("Driver setting for chrome - locally");
-                options.addArguments("--remote-allow-origins=*");
+                log.info("Driver setting for chrome - remotely");
+//                options.addArguments("--remote-allow-origins=*");
                 options.addArguments("--no-sandbox");
                 options.addArguments("--disable-dev-shm-usage");
                 options.addArguments("--headless");
-                driver = new RemoteWebDriver(options);
-//                driver = new ChromeDriver(options);
+//                driver = new RemoteWebDriver(options);
+                driver = new ChromeDriver(options);
 //                delegate = new ChromeDriver(options);
                 /////////////////LOCALLY//////////////
                 //  }
